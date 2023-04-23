@@ -1,0 +1,180 @@
+
+
+-- ---
+-- Globals
+-- ---
+
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
+
+-- ---
+-- Table 'new table'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `new table`;
+		
+CREATE TABLE `new table` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'facturas'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `facturas`;
+		
+CREATE TABLE `facturas` (
+  `id_factura` INT(20) NULL AUTO_INCREMENT DEFAULT NULL,
+  `codigoFactura` VARCHAR(30) NULL DEFAULT NULL,
+  `horaIngreso` TIME(6) NULL DEFAULT NULL,
+  `horaSalida` TIME(6) NULL DEFAULT NULL,
+  `tiempo` INT(20) NULL DEFAULT NULL,
+  `costo` INT(30) NULL DEFAULT NULL,
+  `fecha` DATE NOT NULL,
+  `id_estado` INT(20) NULL DEFAULT NULL,
+  `id_vehiculo` INT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_factura`)
+);
+
+-- ---
+-- Table 'tarifas'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `tarifas`;
+		
+CREATE TABLE `tarifas` (
+  `id_tarifa` INT(20) NULL AUTO_INCREMENT DEFAULT NULL,
+  `costo` INT(30) NULL DEFAULT NULL,
+  `id_tipovehiculo` INT(20) NULL DEFAULT NULL,
+  `id_estado` INT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_tarifa`)
+);
+
+-- ---
+-- Table 'tipovehiculos'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `tipovehiculos`;
+		
+CREATE TABLE `tipovehiculos` (
+  `id_tipovehiculo` INT(20) NULL AUTO_INCREMENT DEFAULT NULL,
+  `tipovehiculo` VARCHAR(30) NULL DEFAULT NULL,
+  `id_estado` INT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_tipovehiculo`)
+);
+
+-- ---
+-- Table 'usuarios'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `usuarios`;
+		
+CREATE TABLE `usuarios` (
+  `id_usuarios` INT(20) NULL AUTO_INCREMENT DEFAULT NULL,
+  `usuariologin` VARCHAR(30) NULL DEFAULT NULL,
+  `clave` VARCHAR(30) NULL DEFAULT NULL,
+  `nombreapellido` VARCHAR(30) NULL DEFAULT NULL,
+  `correo` VARCHAR(30) NULL DEFAULT NULL,
+  `documento` VARCHAR(30) NULL DEFAULT NULL,
+  `id_rol` INT(20) NULL DEFAULT NULL,
+  `id_estado` INT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_usuarios`)
+);
+
+-- ---
+-- Table 'vehiculos'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `vehiculos`;
+		
+CREATE TABLE `vehiculos` (
+  `id_vehiculo` INT(20) NULL AUTO_INCREMENT DEFAULT NULL,
+  `placa` VARCHAR(30) NULL DEFAULT NULL,
+  `modelo` INT(30) NULL DEFAULT NULL,
+  `id_tipovehiculo` INT(20) NULL DEFAULT NULL,
+  `id_usuario` INT(20) NULL DEFAULT NULL,
+  `id_estado` INT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_vehiculo`)
+);
+
+-- ---
+-- Table 'estado'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `estado`;
+		
+CREATE TABLE `estado` (
+  `id_estado` INT(20) NULL AUTO_INCREMENT DEFAULT NULL,
+  `estado` VARCHAR(30) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_estado`)
+);
+
+-- ---
+-- Table 'roles'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `roles`;
+		
+CREATE TABLE `roles` (
+  `id_rol` INT(20) NULL AUTO_INCREMENT DEFAULT NULL,
+  `nombreRol` VARCHAR(30) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_rol`)
+);
+
+-- ---
+-- Foreign Keys 
+-- ---
+
+ALTER TABLE `facturas` ADD FOREIGN KEY (id_estado) REFERENCES `estado` (`id_estado`);
+ALTER TABLE `facturas` ADD FOREIGN KEY (id_vehiculo) REFERENCES `vehiculos` (`id_vehiculo`);
+ALTER TABLE `tarifas` ADD FOREIGN KEY (id_tipovehiculo) REFERENCES `tipovehiculos` (`id_tipovehiculo`);
+ALTER TABLE `tarifas` ADD FOREIGN KEY (id_estado) REFERENCES `estado` (`id_estado`);
+ALTER TABLE `tipovehiculos` ADD FOREIGN KEY (id_estado) REFERENCES `estado` (`id_estado`);
+ALTER TABLE `usuarios` ADD FOREIGN KEY (id_rol) REFERENCES `roles` (`id_rol`);
+ALTER TABLE `usuarios` ADD FOREIGN KEY (id_estado) REFERENCES `estado` (`id_estado`);
+ALTER TABLE `vehiculos` ADD FOREIGN KEY (id_tipovehiculo) REFERENCES `tipovehiculos` (`id_tipovehiculo`);
+ALTER TABLE `vehiculos` ADD FOREIGN KEY (id_usuario) REFERENCES `usuarios` (`id_usuarios`);
+ALTER TABLE `vehiculos` ADD FOREIGN KEY (id_estado) REFERENCES `estado` (`id_estado`);
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `new table` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `facturas` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `tarifas` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `tipovehiculos` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `usuarios` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `vehiculos` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `estado` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `roles` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `new table` (`id`) VALUES
+-- ('');
+-- INSERT INTO `facturas` (`id_factura`,`codigoFactura`,`horaIngreso`,`horaSalida`,`tiempo`,`costo`,`fecha`,`id_estado`,`id_vehiculo`) VALUES
+-- ('','','','','','','','','');
+-- INSERT INTO `tarifas` (`id_tarifa`,`costo`,`id_tipovehiculo`,`id_estado`) VALUES
+-- ('','','','');
+-- INSERT INTO `tipovehiculos` (`id_tipovehiculo`,`tipovehiculo`,`id_estado`) VALUES
+-- ('','','');
+-- INSERT INTO `usuarios` (`id_usuarios`,`usuariologin`,`clave`,`nombreapellido`,`correo`,`documento`,`id_rol`,`id_estado`) VALUES
+-- ('','','','','','','','');
+-- INSERT INTO `vehiculos` (`id_vehiculo`,`placa`,`modelo`,`id_tipovehiculo`,`id_usuario`,`id_estado`) VALUES
+-- ('','','','','','');
+-- INSERT INTO `estado` (`id_estado`,`estado`) VALUES
+-- ('','');
+-- INSERT INTO `roles` (`id_rol`,`nombreRol`) VALUES
+-- ('','');
